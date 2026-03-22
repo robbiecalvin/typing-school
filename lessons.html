@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TypingSchool | Lessons</title>
+  <script>
+    (function () {
+      const prefsKey = "typingSchoolUiPrefs";
+      const themeColors = {
+        midnight: "#020617",
+        earth: "#15160f",
+        cyberpunk: "#0b0620",
+        sketchbook: "#efebe3",
+        "pink-lady": "#2a1022",
+        "retro-game": "#0f1b25",
+        "high-contrast": "#000000"
+      };
+
+      try {
+        const raw = localStorage.getItem(prefsKey);
+        const prefs = raw ? JSON.parse(raw) : {};
+        const theme = typeof prefs.theme === "string" && prefs.theme ? prefs.theme : "midnight";
+        const normalizedTheme = prefs.highContrast && theme === "midnight" ? "high-contrast" : theme;
+        const fontScale = Number(prefs.fontScale) || 100;
+        const backgroundColor = themeColors[normalizedTheme] || themeColors.midnight;
+        const root = document.documentElement;
+
+        root.dataset.theme = normalizedTheme;
+        root.classList.toggle("high-contrast", normalizedTheme === "high-contrast");
+        root.style.setProperty("--font-scale", `${fontScale}%`);
+        root.style.backgroundColor = backgroundColor;
+      } catch (_error) {
+        document.documentElement.style.backgroundColor = "#020617";
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/typing.css" />
+  <link rel="stylesheet" href="css/keyboard.css" />
+</head>
+<body data-page="lessons">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="brand-wrap">
+      <img src="assets/typingschoologo.png" alt="TypingSchool logo" class="logo" />
+      <div>
+        <h1>TypingSchool</h1>
+        <p class="tagline">Lessons</p>
+      </div>
+    </div>
+    <nav aria-label="Main navigation">
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="practice.html">Practice</a></li>
+        <li><a href="lessons.html" aria-current="page">Lessons</a></li>
+        <li><a href="speedtest.html">Speed Test</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+      </ul>
+    </nav>
+    <div class="controls" aria-label="Display controls">
+      <label for="themeSelect" class="font-label">Theme</label>
+      <select id="themeSelect" class="btn-outline" aria-label="Select color theme"></select>
+      <label for="fontScale" class="font-label">Font</label>
+      <input id="fontScale" type="range" min="85" max="130" step="5" value="100" aria-label="Adjust font size" />
+    </div>
+  </header>
+
+  <main id="main" class="container">
+    <section class="card typing-primary">
+      <header>
+        <h2 id="lessonTitle">Select a lesson</h2>
+        <p id="lessonDescription">Choose a lesson from the curriculum panel below.</p>
+      </header>
+
+      <section class="metrics-row" aria-label="Lesson metrics">
+        <div><span>WPM</span><strong id="metricWpm">0</strong></div>
+        <div><span>Accuracy</span><strong id="metricAccuracy">100%</strong></div>
+        <div><span>Errors</span><strong id="metricErrors">0</strong></div>
+        <div><span>Chars</span><strong id="metricChars">0</strong></div>
+      </section>
+
+      <div class="action-row">
+        <button id="startLessonBtn" class="btn-primary" type="button">Start Lesson</button>
+        <button id="resetLessonBtn" class="btn-secondary" type="button">Reset</button>
+      </div>
+
+      <div id="typingArea" class="typing-target" tabindex="0" aria-label="Typing target" role="region"></div>
+      <h3>Keyboard Guide</h3>
+      <div id="keyboardMount"></div>
+
+      <div id="lessonFeedback" class="feedback" aria-live="polite"></div>
+    </section>
+
+    <section class="tool-grid">
+      <section class="card secondary-tools">
+        <h3>Lesson Controls</h3>
+        <div class="secondary-toolbar">
+          <label for="layoutSelect">Layout</label>
+          <select id="layoutSelect" class="btn-outline"></select>
+        </div>
+        <ul id="lessonList" class="lesson-list" aria-label="Lesson list"></ul>
+      </section>
+    </section>
+  </main>
+
+  <script src="js/achievementSystem.js"></script>
+  <script src="js/progressTracker.js"></script>
+  <script src="js/layoutManager.js"></script>
+  <script src="js/heatmapEngine.js"></script>
+  <script src="js/typingEngine.js"></script>
+  <script src="js/lessonEngine.js"></script>
+  <script src="js/keyboardVisual.js"></script>
+  <script src="js/uiController.js"></script>
+</body>
+</html>

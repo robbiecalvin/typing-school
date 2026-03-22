@@ -1,0 +1,74 @@
+[
+  {
+    "id": "l1",
+    "level": 1,
+    "title": "Home Row Keys",
+    "description": "Learn the home row anchor keys and basic rhythm.",
+    "target_keys": ["a", "s", "d", "f", "j", "k", "l", ";"],
+    "practice_text": "asdf jkl; asdf jkl; fj fj fj asdf jkl;",
+    "required_accuracy": 90
+  },
+  {
+    "id": "l2",
+    "level": 2,
+    "title": "Top Row Reach",
+    "description": "Add top-row movement while maintaining home-row posture.",
+    "target_keys": ["q", "w", "e", "r", "u", "i", "o", "p"],
+    "practice_text": "qwer uiop qwer uiop we we ri ri op op",
+    "required_accuracy": 90
+  },
+  {
+    "id": "l3",
+    "level": 3,
+    "title": "Bottom Row Precision",
+    "description": "Practice controlled movement to the bottom row.",
+    "target_keys": ["z", "x", "c", "v", "b", "n", "m"],
+    "practice_text": "zxcv bnm zxcv bnm cv cv bn bn",
+    "required_accuracy": 91
+  },
+  {
+    "id": "l4",
+    "level": 4,
+    "title": "Number Row",
+    "description": "Train your reach and return from the number row.",
+    "target_keys": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"],
+    "practice_text": "12345 67890 09876 54321 123 890",
+    "required_accuracy": 92
+  },
+  {
+    "id": "l5",
+    "level": 5,
+    "title": "Symbols and Punctuation",
+    "description": "Build accuracy on punctuation and symbols.",
+    "target_keys": [",", ".", "/", ";", "'", "-", "="],
+    "practice_text": "a, a. a/ a; a' a- a= ;,./ -=",
+    "required_accuracy": 92
+  },
+  {
+    "id": "l6",
+    "level": 6,
+    "title": "Word Flow",
+    "description": "Transition from key drills into real words.",
+    "target_keys": ["a", "s", "d", "f", "j", "k", "l", ";"],
+    "practice_text": "fast ask flask salad falls jack all",
+    "required_accuracy": 93
+  },
+  {
+    "id": "l7",
+    "level": 7,
+    "title": "Sentence Rhythm",
+    "description": "Type full sentences at a stable pace.",
+    "target_keys": [" ", ".", ","],
+    "practice_text": "Typing with focus builds speed, control, and confidence.",
+    "required_accuracy": 94
+  },
+  {
+    "id": "l8",
+    "level": 8,
+    "title": "Paragraph Endurance",
+    "description": "Complete longer text while preserving form.",
+    "target_keys": [" ", ".", ","],
+    "practice_text": "Small daily practice compounds over time. Keep your shoulders relaxed, your wrists neutral, and your eyes ahead of the cursor.",
+    "required_accuracy": 95
+  }
+]

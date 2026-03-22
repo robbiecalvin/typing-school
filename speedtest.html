@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TypingSchool | Speed Test</title>
+  <script>
+    (function () {
+      const prefsKey = "typingSchoolUiPrefs";
+      const themeColors = {
+        midnight: "#020617",
+        earth: "#15160f",
+        cyberpunk: "#0b0620",
+        sketchbook: "#efebe3",
+        "pink-lady": "#2a1022",
+        "retro-game": "#0f1b25",
+        "high-contrast": "#000000"
+      };
+
+      try {
+        const raw = localStorage.getItem(prefsKey);
+        const prefs = raw ? JSON.parse(raw) : {};
+        const theme = typeof prefs.theme === "string" && prefs.theme ? prefs.theme : "midnight";
+        const normalizedTheme = prefs.highContrast && theme === "midnight" ? "high-contrast" : theme;
+        const fontScale = Number(prefs.fontScale) || 100;
+        const backgroundColor = themeColors[normalizedTheme] || themeColors.midnight;
+        const root = document.documentElement;
+
+        root.dataset.theme = normalizedTheme;
+        root.classList.toggle("high-contrast", normalizedTheme === "high-contrast");
+        root.style.setProperty("--font-scale", `${fontScale}%`);
+        root.style.backgroundColor = backgroundColor;
+      } catch (_error) {
+        document.documentElement.style.backgroundColor = "#020617";
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/typing.css" />
+  <link rel="stylesheet" href="css/keyboard.css" />
+</head>
+<body data-page="speedtest">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="brand-wrap">
+      <img src="assets/typingschoologo.png" alt="TypingSchool logo" class="logo" />
+      <div>
+        <h1>TypingSchool</h1>
+        <p class="tagline">Speed Test</p>
+      </div>
+    </div>
+    <nav aria-label="Main navigation">
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="practice.html">Practice</a></li>
+        <li><a href="lessons.html">Lessons</a></li>
+        <li><a href="speedtest.html" aria-current="page">Speed Test</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+      </ul>
+    </nav>
+    <div class="controls" aria-label="Display controls">
+      <label for="themeSelect" class="font-label">Theme</label>
+      <select id="themeSelect" class="btn-outline" aria-label="Select color theme"></select>
+      <label for="fontScale" class="font-label">Font</label>
+      <input id="fontScale" type="range" min="85" max="130" step="5" value="100" aria-label="Adjust font size" />
+    </div>
+  </header>
+
+  <main id="main" class="container">
+    <section class="card practice-intro">
+      <div class="practice-intro-copy">
+        <p class="eyebrow">Ghost race lab</p>
+        <h2>Launch a timed run with a rival already on the track.</h2>
+        <p class="hint">Use a saved ghost to turn your speed test into a repeatable benchmark, then review the replay after the finish.</p>
+      </div>
+
+      <div class="preset-grid speed-preset-grid" role="group" aria-label="Speed test modes">
+        <button class="preset-card active" data-speed-preset="benchmark" type="button">
+          <span class="preset-kicker">Benchmark</span>
+          <strong>Clean baseline run.</strong>
+          <span>Classic setup for measuring current pace with no race pressure.</span>
+        </button>
+        <button class="preset-card" data-speed-preset="sprint" type="button">
+          <span class="preset-kicker">Sprint</span>
+          <strong>Short high-intensity burst.</strong>
+          <span>Quick launch with a 15-second focus on explosive speed.</span>
+        </button>
+        <button class="preset-card" data-speed-preset="duel" type="button">
+          <span class="preset-kicker">Ghost Duel</span>
+          <strong>Chase a saved best run.</strong>
+          <span>Enable race mode and compare your pacing against prior performance.</span>
+        </button>
+        <button class="preset-card" data-speed-preset="endurance" type="button">
+          <span class="preset-kicker">Endurance</span>
+          <strong>Hold pace for longer.</strong>
+          <span>Extended test for consistency and collapse resistance.</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="card typing-primary">
+      <div class="practice-topline">
+        <div>
+          <p class="eyebrow">Race setup</p>
+          <h2 id="speedPresetTitle">Benchmark</h2>
+        </div>
+        <p id="speedPresetSummary" class="hint">Classic setup for measuring current pace with no race pressure.</p>
+      </div>
+      <section class="metrics-row" aria-label="Speed test metrics">
+        <div><span>WPM</span><strong id="metricWpm">0</strong></div>
+        <div><span>Accuracy</span><strong id="metricAccuracy">100%</strong></div>
+        <div><span>Errors</span><strong id="metricErrors">0</strong></div>
+        <div><span>Chars</span><strong id="metricChars">0</strong></div>
+      </section>
+
+      <div class="action-row">
+        <button id="startSpeedBtn" class="btn-primary" type="button">Start Test</button>
+        <button id="resetSpeedBtn" class="btn-secondary" type="button">Reset</button>
+      </div>
+
+      <div class="duration-row" role="group" aria-label="Test duration">
+        <button class="duration-btn active" data-duration="15" type="button">15s</button>
+        <button class="duration-btn" data-duration="30" type="button">30s</button>
+        <button class="duration-btn" data-duration="60" type="button">60s</button>
+        <button class="duration-btn" data-duration="120" type="button">120s</button>
+      </div>
+
+      <div class="recap-grid speed-brief-grid">
+        <div>
+          <span>Status</span>
+          <strong id="speedStatusHeadline">Ready on the line</strong>
+        </div>
+        <div>
+          <span>Ghost</span>
+          <strong id="speedGhostHeadline">No rival loaded</strong>
+        </div>
+        <div>
+          <span>Target</span>
+          <strong id="speedTargetHeadline">Set a baseline run</strong>
+        </div>
+      </div>
+
+      <div class="timer" id="speedTimer" aria-live="polite">15</div>
+      <div id="typingArea" class="typing-target" tabindex="0" aria-label="Speed test typing area"></div>
+      <h3>Keyboard Guide</h3>
+      <div id="keyboardMount"></div>
+
+      <div class="race-row" aria-label="Race progress">
+        <div>
+          <span>User</span>
+          <div class="race-track"><div id="userRaceBar" class="race-fill user"></div></div>
+        </div>
+        <div>
+          <span>Ghost</span>
+          <div class="race-track"><div id="ghostRaceBar" class="race-fill ghost"></div></div>
+        </div>
+      </div>
+
+      <div id="speedFeedback" class="feedback" aria-live="polite"></div>
+    </section>
+
+    <section class="practice-side-grid">
+      <section class="card secondary-tools">
+        <h3>Replay + Race Tools</h3>
+        <div class="secondary-toolbar">
+          <label for="ghostSessionSelect">Ghost</label>
+          <select id="ghostSessionSelect" class="btn-outline" aria-label="Select ghost replay"></select>
+          <label class="toggle-wrap"><input id="raceModeToggle" type="checkbox" /> Race mode</label>
+          <button id="replayGhostBtn" class="btn-outline" type="button">Load Replay</button>
+        </div>
+
+        <div id="ghostReplayArea" class="typing-target replay" aria-label="Ghost replay area"></div>
+        <div class="secondary-toolbar">
+          <button id="replayPlayBtn" class="btn-outline" type="button">Play</button>
+          <button id="replayPauseBtn" class="btn-outline" type="button">Pause</button>
+          <label for="replaySpeed">Speed</label>
+          <input id="replaySpeed" type="range" min="50" max="300" step="25" value="100" />
+          <label for="replayScrubber">Timeline</label>
+          <input id="replayScrubber" type="range" min="0" max="100" step="1" value="0" />
+        </div>
+      </section>
+
+      <section class="card practice-status" aria-live="polite">
+        <div class="session-recap">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Post-race analysis</p>
+              <h3>How the run landed</h3>
+            </div>
+          </div>
+          <div class="recap-grid">
+            <div>
+              <span>Result</span>
+              <strong id="speedResultHeadline">Waiting to start</strong>
+            </div>
+            <div>
+              <span>Race call</span>
+              <strong id="speedRaceCall">No ghost selected</strong>
+            </div>
+            <div>
+              <span>Next move</span>
+              <strong id="speedResultNext">Load a ghost or set a fresh baseline</strong>
+            </div>
+          </div>
+        </div>
+        <p id="speedRhythmSummary" class="hint">Rhythm feedback appears after each timed run.</p>
+        <p id="speedGhostSummary" class="hint">Save a run to build a library of ghosts to race later.</p>
+        <div id="speedFeedback" class="feedback" aria-live="polite"></div>
+      </section>
+    </section>
+  </main>
+
+  <script src="js/achievementSystem.js"></script>
+  <script src="js/progressTracker.js"></script>
+  <script src="js/rhythmAnalyzer.js"></script>
+  <script src="js/typingEngine.js"></script>
+  <script src="js/keyboardVisual.js"></script>
+  <script src="js/ghostReplay.js"></script>
+  <script src="js/speedTest.js"></script>
+  <script src="js/uiController.js"></script>
+</body>
+</html>

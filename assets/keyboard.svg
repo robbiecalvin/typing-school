@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 280" role="img" aria-label="Keyboard">
+  <rect width="900" height="280" rx="20" fill="#0f141c"/>
+  <g fill="#1a2431" stroke="#2d3a4d" stroke-width="2">
+    <rect x="30" y="30" width="60" height="40" rx="6"/><rect x="100" y="30" width="60" height="40" rx="6"/><rect x="170" y="30" width="60" height="40" rx="6"/>
+    <rect x="240" y="30" width="60" height="40" rx="6"/><rect x="310" y="30" width="60" height="40" rx="6"/><rect x="380" y="30" width="60" height="40" rx="6"/>
+    <rect x="450" y="30" width="60" height="40" rx="6"/><rect x="520" y="30" width="60" height="40" rx="6"/><rect x="590" y="30" width="60" height="40" rx="6"/>
+    <rect x="660" y="30" width="60" height="40" rx="6"/><rect x="730" y="30" width="60" height="40" rx="6"/>
+
+    <rect x="50" y="90" width="60" height="40" rx="6"/><rect x="120" y="90" width="60" height="40" rx="6"/><rect x="190" y="90" width="60" height="40" rx="6"/>
+    <rect x="260" y="90" width="60" height="40" rx="6"/><rect x="330" y="90" width="60" height="40" rx="6"/><rect x="400" y="90" width="60" height="40" rx="6"/>
+    <rect x="470" y="90" width="60" height="40" rx="6"/><rect x="540" y="90" width="60" height="40" rx="6"/><rect x="610" y="90" width="60" height="40" rx="6"/>
+    <rect x="680" y="90" width="60" height="40" rx="6"/>
+
+    <rect x="70" y="150" width="70" height="40" rx="6"/><rect x="150" y="150" width="70" height="40" rx="6"/><rect x="230" y="150" width="70" height="40" rx="6"/>
+    <rect x="310" y="150" width="70" height="40" rx="6"/><rect x="390" y="150" width="70" height="40" rx="6"/><rect x="470" y="150" width="70" height="40" rx="6"/>
+    <rect x="550" y="150" width="70" height="40" rx="6"/><rect x="630" y="150" width="70" height="40" rx="6"/>
+
+    <rect x="200" y="210" width="500" height="40" rx="6"/>
+  </g>
+</svg>

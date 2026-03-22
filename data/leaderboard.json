@@ -1,0 +1,7 @@
+[
+  {"name": "A. Nguyen", "wpm": 122, "accuracy": 98.9, "mode": "speedtest", "date": "2026-02-18"},
+  {"name": "R. Patel", "wpm": 117, "accuracy": 99.1, "mode": "speedtest", "date": "2026-02-25"},
+  {"name": "M. Chen", "wpm": 109, "accuracy": 97.8, "mode": "race", "date": "2026-03-01"},
+  {"name": "S. Kim", "wpm": 104, "accuracy": 99.3, "mode": "developer", "date": "2026-03-03"},
+  {"name": "L. Rossi", "wpm": 101, "accuracy": 98.4, "mode": "speedtest", "date": "2026-03-05"}
+]

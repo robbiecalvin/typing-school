@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TypingSchool | Home</title>
+  <script>
+    (function () {
+      const prefsKey = "typingSchoolUiPrefs";
+      const themeColors = {
+        midnight: "#020617",
+        earth: "#15160f",
+        cyberpunk: "#0b0620",
+        sketchbook: "#efebe3",
+        "pink-lady": "#2a1022",
+        "retro-game": "#0f1b25",
+        "high-contrast": "#000000"
+      };
+
+      try {
+        const raw = localStorage.getItem(prefsKey);
+        const prefs = raw ? JSON.parse(raw) : {};
+        const theme = typeof prefs.theme === "string" && prefs.theme ? prefs.theme : "midnight";
+        const normalizedTheme = prefs.highContrast && theme === "midnight" ? "high-contrast" : theme;
+        const fontScale = Number(prefs.fontScale) || 100;
+        const backgroundColor = themeColors[normalizedTheme] || themeColors.midnight;
+        const root = document.documentElement;
+
+        root.dataset.theme = normalizedTheme;
+        root.classList.toggle("high-contrast", normalizedTheme === "high-contrast");
+        root.style.setProperty("--font-scale", `${fontScale}%`);
+        root.style.backgroundColor = backgroundColor;
+      } catch (_error) {
+        document.documentElement.style.backgroundColor = "#020617";
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="css/main.css" />
+</head>
+<body data-page="home">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="brand-wrap">
+      <img src="assets/typingschoologo.png" alt="TypingSchool logo" class="logo" />
+      <div>
+        <h1>TypingSchool</h1>
+        <p class="tagline">Master touch typing with focused practice.</p>
+      </div>
+    </div>
+    <nav aria-label="Main navigation">
+      <ul class="nav-links">
+        <li><a href="index.html" aria-current="page">Home</a></li>
+        <li><a href="lessons.html">Lessons</a></li>
+        <li><a href="practice.html">Practice</a></li>
+        <li><a href="speedtest.html">Speed Test</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+      </ul>
+    </nav>
+    <div class="controls" aria-label="Display controls">
+      <label for="themeSelect" class="font-label">Theme</label>
+      <select id="themeSelect" class="btn-outline" aria-label="Select color theme"></select>
+      <label for="fontScale" class="font-label">Font</label>
+      <input id="fontScale" type="range" min="85" max="130" step="5" value="100" aria-label="Adjust font size" />
+    </div>
+  </header>
+
+  <main id="main" class="container">
+    <section class="hero hero-showcase card">
+      <div class="hero-copy">
+        <p class="eyebrow">Adaptive typing lab</p>
+        <h2>Train like your keyboard is keeping score.</h2>
+        <p class="hero-lede">Lessons, ghost races, weak-key targeting, and progress analytics in one focused system.</p>
+        <div class="hero-badges" aria-label="Current progress overview">
+          <span class="hero-badge">Tier <strong id="homeTier">Beginner</strong></span>
+          <span class="hero-badge">Best <strong id="homeBestWpm">0</strong> WPM</span>
+          <span class="hero-badge">Accuracy <strong id="homeAccuracy">0%</strong></span>
+        </div>
+        <div class="hero-actions">
+          <a class="btn-primary" href="practice.html">Start Practice</a>
+          <a class="btn-secondary" href="speedtest.html">Race Your Ghost</a>
+          <a class="btn-outline" href="dashboard.html">View Dashboard</a>
+        </div>
+      </div>
+
+      <div class="hero-preview" aria-hidden="true">
+        <section class="preview-panel preview-terminal">
+          <div class="preview-label">Live lane</div>
+          <p class="preview-text">
+            <span class="typed">steady rhythm builds</span>
+            <span class="current">f</span>
+            <span class="upcoming">aster and cleaner typing over time</span>
+          </p>
+          <div class="preview-metrics">
+            <div><span>WPM</span><strong>78</strong></div>
+            <div><span>Accuracy</span><strong>97%</strong></div>
+            <div><span>Cadence</span><strong>Stable</strong></div>
+          </div>
+        </section>
+
+        <section class="preview-panel preview-analysis">
+          <div class="preview-label">Weak-key scan</div>
+          <div class="key-chip-row">
+            <span class="key-chip hot">R</span>
+            <span class="key-chip warm">T</span>
+            <span class="key-chip warm">P</span>
+            <span class="key-chip cool">;</span>
+            <span class="key-chip cool">V</span>
+          </div>
+          <div class="preview-bars">
+            <div class="preview-bar"><span>Left index recovery</span><i style="width: 84%"></i></div>
+            <div class="preview-bar"><span>Rhythm stability</span><i style="width: 72%"></i></div>
+            <div class="preview-bar"><span>Ghost pace match</span><i style="width: 65%"></i></div>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section class="grid-3 home-stat-grid">
+      <article class="card stat-card" tabindex="0">
+        <h3>Current Streak</h3>
+        <p id="homeStreak" class="stat-value">0 days</p>
+        <p class="hint">Show up daily to stabilize speed.</p>
+      </article>
+      <article class="card stat-card" tabindex="0">
+        <h3>Lessons Completed</h3>
+        <p id="homeLessonsDone" class="stat-value">0</p>
+        <p class="hint">Structured reps compound faster than random tests.</p>
+      </article>
+      <article class="card stat-card" tabindex="0">
+        <h3>Words Trained</h3>
+        <p id="homeWordsTyped" class="stat-value">0</p>
+        <p class="hint">Every session adds signal for better drills.</p>
+      </article>
+    </section>
+
+    <section class="grid-2 home-story-grid">
+      <article class="card mission-card">
+        <p class="eyebrow">Next mission</p>
+        <h3 id="homeMissionTitle">Build a first typing streak.</h3>
+        <p id="homeMissionText" class="mission-copy">Complete a few clean sessions to unlock personalized coaching.</p>
+        <div class="mission-meta">
+          <div>
+            <span>Sessions logged</span>
+            <strong id="homeSessionCount">0</strong>
+          </div>
+          <div>
+            <span>Ghost library</span>
+            <strong id="homeGhostCount">0</strong>
+          </div>
+          <div>
+            <span>Recent form</span>
+            <strong id="homeRecentForm">Waiting</strong>
+          </div>
+        </div>
+      </article>
+
+      <article class="card coach-card">
+        <p class="eyebrow">Coach notes</p>
+        <h3>Focus keys</h3>
+        <ul id="homeWeakKeys" class="achievement-list key-insight-list" aria-live="polite"></ul>
+        <p id="homeGhostStatus" class="hint">Finish a speed test to unlock ghost racing and replay analysis.</p>
+      </article>
+    </section>
+
+    <section class="grid-3 feature-showcase">
+      <article class="card feature-card">
+        <p class="eyebrow">Adaptive drills</p>
+        <h3>Turn mistakes into the next lesson.</h3>
+        <p>The trainer can target weak keys, specific fingers, and coding syntax instead of serving generic paragraphs.</p>
+        <a class="text-link" href="practice.html">Open practice</a>
+      </article>
+      <article class="card feature-card">
+        <p class="eyebrow">Ghost racing</p>
+        <h3>Compete against your own best run.</h3>
+        <p>Replay prior sessions, compare pacing live, and turn speed tests into a repeatable benchmark.</p>
+        <a class="text-link" href="speedtest.html">Open speed test</a>
+      </article>
+      <article class="card feature-card">
+        <p class="eyebrow">Progress forensics</p>
+        <h3>See where speed is leaking.</h3>
+        <p>Track WPM, accuracy, streaks, distribution, and weak-key rankings from a single dashboard.</p>
+        <a class="text-link" href="dashboard.html">Open dashboard</a>
+      </article>
+    </section>
+
+    <section class="card">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Momentum</p>
+          <h3>Recent Achievements</h3>
+        </div>
+        <p class="hint">Unlocked milestones show up here as your training compounds.</p>
+      </div>
+      <ul id="homeAchievements" class="achievement-list" aria-live="polite"></ul>
+    </section>
+  </main>
+
+  <script src="js/achievementSystem.js"></script>
+  <script src="js/progressTracker.js"></script>
+  <script src="js/skillRanking.js"></script>
+  <script src="js/chartRenderer.js"></script>
+  <script src="js/statsEngine.js"></script>
+  <script src="js/uiController.js"></script>
+</body>
+</html>

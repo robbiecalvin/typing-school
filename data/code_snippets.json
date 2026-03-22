@@ -1,0 +1,50 @@
+[
+  {
+    "language": "javascript",
+    "title": "Array Filter",
+    "challenge_type": "comprehension",
+    "snippet": "const scores = [91, 84, 76, 99];\nconst passing = scores.filter((score) => score >= 80);\nconsole.log(passing);"
+  },
+  {
+    "language": "javascript",
+    "title": "Fix Undefined Variable",
+    "challenge_type": "debugging",
+    "snippet": "function total(items) {\n  let sum = 0;\n  for (let i = 0; i < items.length; i += 1) {\n    sum += item[i];\n  }\n  return sum;\n}"
+  },
+  {
+    "language": "python",
+    "title": "Refactor Loop",
+    "challenge_type": "refactoring",
+    "snippet": "numbers = [1, 2, 3, 4, 5]\nsquares = []\nfor n in numbers:\n    squares.append(n * n)\nprint(squares)"
+  },
+  {
+    "language": "python",
+    "title": "Dictionary Counter",
+    "challenge_type": "comprehension",
+    "snippet": "text = 'typing trainer'\ncounts = {}\nfor char in text:\n    counts[char] = counts.get(char, 0) + 1"
+  },
+  {
+    "language": "html",
+    "title": "Accessible Form",
+    "challenge_type": "comprehension",
+    "snippet": "<form aria-label=\"signup\">\n  <label for=\"email\">Email</label>\n  <input id=\"email\" type=\"email\" required />\n</form>"
+  },
+  {
+    "language": "html",
+    "title": "Fix Heading Hierarchy",
+    "challenge_type": "debugging",
+    "snippet": "<main>\n  <h3>Welcome</h3>\n  <h1>Typing School</h1>\n  <p>Practice daily for progress.</p>\n</main>"
+  },
+  {
+    "language": "css",
+    "title": "Grid Container",
+    "challenge_type": "comprehension",
+    "snippet": ".dashboard-grid {\n  display: grid;\n  grid-template-columns: repeat(3, minmax(0, 1fr));\n  gap: 1rem;\n}"
+  },
+  {
+    "language": "css",
+    "title": "Refactor Button",
+    "challenge_type": "refactoring",
+    "snippet": ".btn-primary {\n  background: #2aa889;\n  background: linear-gradient(90deg, #2aa889, #4cc9f0);\n  border: none;\n  border-radius: 10px;\n}"
+  }
+]

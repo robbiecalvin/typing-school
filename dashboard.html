@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TypingSchool | Dashboard</title>
+  <script>
+    (function () {
+      const prefsKey = "typingSchoolUiPrefs";
+      const themeColors = {
+        midnight: "#020617",
+        earth: "#15160f",
+        cyberpunk: "#0b0620",
+        sketchbook: "#efebe3",
+        "pink-lady": "#2a1022",
+        "retro-game": "#0f1b25",
+        "high-contrast": "#000000"
+      };
+
+      try {
+        const raw = localStorage.getItem(prefsKey);
+        const prefs = raw ? JSON.parse(raw) : {};
+        const theme = typeof prefs.theme === "string" && prefs.theme ? prefs.theme : "midnight";
+        const normalizedTheme = prefs.highContrast && theme === "midnight" ? "high-contrast" : theme;
+        const fontScale = Number(prefs.fontScale) || 100;
+        const backgroundColor = themeColors[normalizedTheme] || themeColors.midnight;
+        const root = document.documentElement;
+
+        root.dataset.theme = normalizedTheme;
+        root.classList.toggle("high-contrast", normalizedTheme === "high-contrast");
+        root.style.setProperty("--font-scale", `${fontScale}%`);
+        root.style.backgroundColor = backgroundColor;
+      } catch (_error) {
+        document.documentElement.style.backgroundColor = "#020617";
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+</head>
+<body data-page="dashboard">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="brand-wrap">
+      <img src="assets/typingschoologo.png" alt="TypingSchool logo" class="logo" />
+      <div>
+        <h1>TypingSchool</h1>
+        <p class="tagline">Dashboard</p>
+      </div>
+    </div>
+    <nav aria-label="Main navigation">
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="practice.html">Practice</a></li>
+        <li><a href="lessons.html">Lessons</a></li>
+        <li><a href="speedtest.html">Speed Test</a></li>
+        <li><a href="dashboard.html" aria-current="page">Dashboard</a></li>
+      </ul>
+    </nav>
+    <div class="controls" aria-label="Display controls">
+      <label for="themeSelect" class="font-label">Theme</label>
+      <select id="themeSelect" class="btn-outline" aria-label="Select color theme"></select>
+      <label for="fontScale" class="font-label">Font</label>
+      <input id="fontScale" type="range" min="85" max="130" step="5" value="100" aria-label="Adjust font size" />
+    </div>
+  </header>
+
+  <main id="main" class="container">
+    <section class="card dashboard-hero">
+      <div class="dashboard-hero-copy">
+        <p class="eyebrow">Coaching dashboard</p>
+        <h2 id="dashHeroTitle">Build enough data to coach your speed.</h2>
+        <p id="dashHeroText" class="hint">Run a few sessions and this screen will start telling you where your speed is leaking and what to fix next.</p>
+      </div>
+      <div class="dashboard-hero-meta">
+        <div>
+          <span>Skill tier</span>
+          <strong id="dashTier">Beginner</strong>
+        </div>
+        <div>
+          <span>Consistency</span>
+          <strong id="dashConsistency">0%</strong>
+        </div>
+        <div>
+          <span>Sessions</span>
+          <strong id="dashSessionCount">0</strong>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid-3 stats-grid">
+      <article class="card stat-card"><h2>Best WPM</h2><p id="dashBestWpm" class="stat-value">0</p></article>
+      <article class="card stat-card"><h2>Average WPM</h2><p id="dashAverageWpm" class="stat-value">0</p></article>
+      <article class="card stat-card"><h2>Accuracy</h2><p id="dashAccuracy" class="stat-value">0%</p></article>
+      <article class="card stat-card"><h2>Lessons Completed</h2><p id="dashLessons" class="stat-value">0</p></article>
+      <article class="card stat-card"><h2>Daily Streak</h2><p id="dashStreak" class="stat-value">0 days</p></article>
+      <article class="card stat-card"><h2>Words Trained</h2><p id="dashWordsTyped" class="stat-value">0</p><small id="dashRecentGain">0 recent sessions</small></article>
+    </section>
+
+    <section class="grid-2 coaching-grid">
+      <article class="card coach-card">
+        <p class="eyebrow">Top priority</p>
+        <h3 id="dashPriorityTitle">Start collecting signal.</h3>
+        <p id="dashPriorityText" class="mission-copy">A few focused sessions are enough to reveal where accuracy and rhythm break down.</p>
+        <div class="mission-meta">
+          <div>
+            <span>Recent form</span>
+            <strong id="dashRecentForm">Waiting</strong>
+          </div>
+          <div>
+            <span>Fastest zone</span>
+            <strong id="dashBestZone">0-30 WPM</strong>
+          </div>
+          <div>
+            <span>Ghost library</span>
+            <strong id="dashGhostCount">0</strong>
+          </div>
+        </div>
+      </article>
+
+      <article class="card coach-card">
+        <p class="eyebrow">Leak map</p>
+        <h3>Where speed is slipping</h3>
+        <ul id="dashLeakList" class="achievement-list" aria-live="polite"></ul>
+      </article>
+    </section>
+
+    <section class="card action-row">
+      <button id="exportJsonBtn" class="btn-outline" type="button">Export JSON</button>
+      <button id="exportCsvBtn" class="btn-outline" type="button">Export CSV</button>
+      <p class="hint">Export your typing statistics locally.</p>
+    </section>
+
+    <section class="charts-grid">
+      <section class="card chart-card">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Momentum</p>
+            <h2>WPM Over Time</h2>
+          </div>
+          <p class="hint">Are your last sessions climbing, flat, or noisy?</p>
+        </div>
+        <canvas id="wpmChart" width="900" height="260" aria-label="WPM history chart"></canvas>
+      </section>
+
+      <section class="card chart-card">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Control</p>
+            <h2>Accuracy Trends</h2>
+          </div>
+          <p class="hint">Speed gains matter only if accuracy survives.</p>
+        </div>
+        <canvas id="accuracyChart" width="900" height="260" aria-label="Accuracy history chart"></canvas>
+      </section>
+
+      <section class="card chart-card">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Consistency</p>
+            <h2>Practice Frequency</h2>
+          </div>
+          <p class="hint">Daily reps keep rhythm from resetting.</p>
+        </div>
+        <canvas id="frequencyChart" width="900" height="240" aria-label="Daily practice frequency chart"></canvas>
+      </section>
+
+      <section class="card chart-card">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Range</p>
+            <h2>Speed Distribution</h2>
+          </div>
+          <p class="hint">Your most common pace band shows where you really live.</p>
+        </div>
+        <canvas id="distributionChart" width="900" height="240" aria-label="Speed distribution chart"></canvas>
+      </section>
+
+      <section class="card chart-card">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Habit</p>
+            <h2>Practice Streak Graph</h2>
+          </div>
+          <p class="hint">Momentum is easier to keep than restart.</p>
+        </div>
+        <canvas id="streakGraph" width="900" height="240" aria-label="Practice streak graph"></canvas>
+      </section>
+
+      <section class="card coach-card">
+        <p class="eyebrow">Weak-key ranking</p>
+        <h2>Friction by key</h2>
+        <ul id="dashWeakKeys" class="achievement-list"></ul>
+      </section>
+    </section>
+
+    <section class="card">
+      <h2>Achievements</h2>
+      <ul id="dashAchievements" class="achievement-list"></ul>
+    </section>
+  </main>
+
+  <script src="js/achievementSystem.js"></script>
+  <script src="js/progressTracker.js"></script>
+  <script src="js/skillRanking.js"></script>
+  <script src="js/sessionExporter.js"></script>
+  <script src="js/chartRenderer.js"></script>
+  <script src="js/statsEngine.js"></script>
+  <script src="js/uiController.js"></script>
+</body>
+</html>
