@@ -56,3 +56,7 @@ It runs entirely client-side and stays deployable to GitHub Pages without build 
 1. Push repository to GitHub.
 2. Enable Pages from repo root.
 3. No build step required.
+
+## Architecture and evaluation
+
+Client-side JavaScript modules, web workers and localStorage separate training, analytics and persistence. Suggested checks include known typing-error sequences, timing calculations, keyboard layout switching, replay and JSON/CSV export. These are proposed checks, not verified test results.
